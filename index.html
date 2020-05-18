@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@16.12.0/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.9.5/babel.js"></script>
+  <script type="text/babel">
+    const rootElement = document.getElementById('root')
+    function Display({ id, name }) {
+      return (
+        <div>
+          <div>
+            <label htmlFor="id">Shape ID: </label>
+            {name ? <input value={id} /> : 'Please click a shape'}
+          </div>
+          <div>
+            <label htmlFor="name">Shape Name: </label>
+            {name ? <input value={name} /> : 'Please click a shape'}
+          </div>
+        </div>
+      )
+    }
+
+    function App() {
+      const [id, setId] = React.useState('')
+      const [name, setName] = React.useState('')
+      const handleClick = event => {
+        setId(event.target.id)
+        setName(event.target.getAttribute("name"))
+
+      }
+      return (
+        <form>
+          <svg width="800" height="250">
+            <rect onClick={handleClick} id="0" name="Rectangle" x="10" y="10" width="150" height="150" fill="green" />
+            <circle onClick={handleClick} id="1" name="Circle" cx="300" cy="90" r="75" fill="red" />
+            <polygon onClick={handleClick} id="2" name="Triangle" points="500,10 600,160 400,160" style={{ fill: "blue" }} />
+          </svg>
+          <Display id={id} name={name} />
+        </form>
+      )
+    }
+    ReactDOM.render(<App />, rootElement)
+  </script>
+</body>
+
+</html>
